@@ -7,19 +7,19 @@
     <title>Heart</title>
     <meta name="description" content="Virtual Reality-Oriented Human Anatomy - Heart">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-    <script src="/assets/js/aframe.min.js"></script>
-    <script src="/assets/js/aframe-extras.min.js"></script>
+    <script src="../assets/js/aframe.min.js"></script>
+    <script src="../assets/js/aframe-extras.min.js"></script>
 </head>
 
 <body>
 
-    <audio class="playback" data-audioId="1" src="/assets/audio/aboutHeart.mp3"></audio>
-    <audio class="playback" data-audioId="2" src="/assets/audio/leftAtrium.mp3"></audio>
-    <audio class="playback" data-audioId="3" src="/assets/audio/rightAtrium.mp3"></audio>
-    <audio class="playback" data-audioId="4" src="/assets/audio/leftVentricle.mp3"></audio>
-    <audio class="playback" data-audioId="5" src="/assets/audio/rightVentricle.mp3"></audio>
+    <audio class="playback" data-audioId="1" src="../assets/audio/aboutHeart.mp3"></audio>
+    <audio class="playback" data-audioId="2" src="../assets/audio/leftAtrium.mp3"></audio>
+    <audio class="playback" data-audioId="3" src="../assets/audio/rightAtrium.mp3"></audio>
+    <audio class="playback" data-audioId="4" src="../assets/audio/leftVentricle.mp3"></audio>
+    <audio class="playback" data-audioId="5" src="../assets/audio/rightVentricle.mp3"></audio>
 
-    <audio autoplay data-audioType="background" loop src="/assets/audio/bg.mp3"></audio>
+    <audio autoplay data-audioType="background" loop src="../assets/audio/bg.mp3"></audio>
 
     <a-scene>
 
@@ -45,8 +45,8 @@
                     repeat="indefinite">
                 </a-animation>
             </a-asset-item>
-            <img alt="3D Image" id="hideShow" src="/assets/images/hideshow.png">
-            <img alt="3D Image" id="whatsthis" src="/assets/images/whatsthis.png">
+            <img alt="3D Image" id="hideShow" src="../assets/images/hideshow.png">
+            <img alt="3D Image" id="whatsthis" src="../assets/images/whatsthis.png">
         </a-assets>
 
         <a-entity id="staticHeart" static-body gltf-model="#scene" scale="50 50 50" position="0 -3 0" animation-mixer>
