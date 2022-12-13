@@ -10,6 +10,13 @@
 </head>
 
 <body>
+
+    <audio class="playback" data-audioId="1" src="/assets/audio/aboutHeart.mp3"></audio>
+    <audio class="playback" data-audioId="2" src="/assets/audio/leftAtrium.mp3"></audio>
+    <audio class="playback" data-audioId="3" src="/assets/audio/rightAtrium.mp3"></audio>
+    <audio class="playback" data-audioId="4" src="/assets/audio/leftVentricle.mp3"></audio>
+    <audio class="playback" data-audioId="5" src="/assets/audio/rightVentricle.mp3"></audio>
+
     <a-scene>
 
         <a-entity position="0 2 10" rotation="0 0 0" movement-controls="fly: true">
@@ -73,10 +80,14 @@
 
 
             let leftVentricle = document.querySelector("#leftVentricle");
+            let leftVentricleAudio = document.querySelector("[data-audioId='4']");
             let rightVentricle = document.querySelector("#rightVentricle");
+            let rightVentricleAudio = document.querySelector("[data-audioId='5']");
 
             let leftAtrium = document.querySelector("#leftAtrium");
+            let leftAtriumAudio = document.querySelector("[data-audioId='2']");
             let rightAtrium = document.querySelector("#rightAtrium");
+            let rightAtriumAudio = document.querySelector("[data-audioId='3']");
 
             let annotations = document.querySelectorAll(".annotations");
 
@@ -89,6 +100,34 @@
                 annotations.forEach(annotation => {
                     annotation.setAttribute("visible", !annotation.getAttribute("visible"))
                 })
+            })
+
+            function stopPlaying() {
+                let audios = document.querySelectorAll("audio")
+                audios.forEach(audio => {
+                    audio.pause()
+                    audio.currentTime = 0
+                })
+            }
+
+            leftVentricle.addEventListener("click", function () {
+                stopPlaying()
+                leftVentricleAudio.play()
+            })
+
+            rightVentricle.addEventListener("click", function () {
+                stopPlaying()
+                rightVentricleAudio.play()
+            })
+
+            leftAtrium.addEventListener("click", function () {
+                stopPlaying()
+                leftAtriumAudio.play()
+            })
+
+            rightAtrium.addEventListener("click", function () {
+                stopPlaying()
+                rightAtriumAudio.play()
             })
 
             // document.querySelector("a-scene").enterVR()
