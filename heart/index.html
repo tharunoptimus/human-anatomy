@@ -32,12 +32,12 @@
 		</a-entity>
 
 		<a-assets>
-			<a-asset-item id="scene" src="assets/models/staticHeart.glb">
+			<a-asset-item id="scene" src="../assets/models/staticHeart.glb">
                 <a-animation attribute="rotation" begin="mouseenter" end="click" dur="100000" to="0 360 0"
                     repeat="indefinite">
                 </a-animation>
             </a-asset-item>	
-			<img alt="3D Image" id="exploreHeart" src="assets/images/exploreHeart.png">
+			<img alt="3D Image" id="exploreHeart" src="../assets/images/exploreHeart.png">
 		</a-assets>
 
         <a-entity id="staticHeart" static-body gltf-model="#scene" scale="30 30 30" position="0 -3 0" animation-mixer></a-entity>
