@@ -42,6 +42,7 @@
                 </a-animation>
             </a-asset-item>
             <img alt="3D Image" id="hideShow" src="/assets/images/hideshow.png">
+            <img alt="3D Image" id="whatsthis" src="/assets/images/whatsthis.png">
         </a-assets>
 
         <a-entity id="staticHeart" static-body gltf-model="#scene" scale="50 50 50" position="0 -3 0" animation-mixer>
@@ -50,6 +51,9 @@
 
         <a-image id="hideShowButton" src="#hideShow" width="5" height="1" position="4.70924 5.40161 -0.10019"
             rotation="10 0 0" material="" geometry=""></a-image>
+
+        <a-image id="about" src="#whatsthis" width="5" height="1" position="-0.98737 7.0696 -0.10019" rotation=""
+            material="" geometry=""></a-image>
 
         <a-sphere id="leftVentricle" position="1.36838 -0.00623 0.665" radius="1" color="red" scale="3 3 3" material=""
             geometry="radius: 0.1"></a-sphere>
@@ -109,6 +113,12 @@
                     audio.currentTime = 0
                 })
             }
+
+            document.querySelector("#about").addEventListener("click", function () {
+                stopPlaying()
+                let audio = document.querySelector("audio[data-audioId='1']")
+                audio.play()
+            })
 
             leftVentricle.addEventListener("click", function () {
                 stopPlaying()
