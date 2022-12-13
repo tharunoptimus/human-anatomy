@@ -42,6 +42,7 @@
 		<a-image src="#anatomy" position="0 -0.7 0" width="3" height="3" scale="2 2 2"></a-image>
 
 		<a-sphere id="heart" position="0 -0.50817 -0.06404" radius="1" color="red" scale="2 2 2" material="" geometry="radius: 0.1"></a-sphere>
+		<a-sphere id="skin" position="0.99723 -0.50817 -0.06404" radius="1" color="red" scale="2 2 2" material="" geometry="radius: 0.1"></a-sphere>
 
 		<a-sky src="#sky"></a-sky>
 
@@ -50,6 +51,11 @@
 			document.getElementById("heart").addEventListener("click", () => {
 				console.debug("Clicked Heart")
 				window.location.href = "/heart"
+			})
+
+			document.getElementById("skin").addEventListener("click", () => {
+				console.debug("Clicked Skin")
+				window.location.href = "/skin"
 			})
 
 		</script>
