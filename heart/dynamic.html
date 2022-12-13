@@ -17,6 +17,8 @@
     <audio class="playback" data-audioId="4" src="/assets/audio/leftVentricle.mp3"></audio>
     <audio class="playback" data-audioId="5" src="/assets/audio/rightVentricle.mp3"></audio>
 
+    <audio autoplay data-audioType="background" loop src="/assets/audio/bg.mp3"></audio>
+
     <a-scene>
 
         <a-entity position="0 2 10" rotation="0 0 0" movement-controls="fly: true">
@@ -109,6 +111,7 @@
             function stopPlaying() {
                 let audios = document.querySelectorAll("audio")
                 audios.forEach(audio => {
+                    if (audio.getAttribute("data-audioType") == "background") return
                     audio.pause()
                     audio.currentTime = 0
                 })
