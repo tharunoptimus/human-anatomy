@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart</title>
+    <script src="./assets/js/aframe.min.js"></script>
+    <script src="./assets/js/aframe-extras.min.js"></script>
+</head>
+<body>
+    <a-scene>
+
+		<a-entity position="0 0 10" rotation="0 0 0" movement-controls="fly: true">
+			<a-entity id="superView" camera look-controls wasd-controls rotation-reader>
+
+				<a-entity position="0 0 -3" geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03;"
+					material="color: cyan; shader: flat" cursor="maxDistance: 30; fuse: true">
+
+					<a-animation begin="click" easing="ease-in" attribute="scale" fill="forwards" from="0.2 0.2 0.2"
+						to="1 1 1" dur="150"></a-animation>
+
+					<a-animation begin="fusing" easing="ease-in" attribute="scale" fill="backwards" from="1 1 1"
+						to="0.2 0.2 0.2" dur="750"></a-animation>
+
+				</a-entity>
+			</a-entity>
+		</a-entity>
+
+		<a-assets>
+			<a-asset-item id="scene" src="assets/models/staticHeart.glb">
+                <a-animation attribute="rotation" begin="mouseenter" end="click" dur="100000" to="0 360 0"
+                    repeat="indefinite">
+                </a-animation>
+            </a-asset-item>	
+			<img alt="3D Image" id="exploreHeart" src="assets/images/exploreHeart.png">
+		</a-assets>
+
+        <a-entity id="staticHeart" static-body gltf-model="#scene" scale="30 30 30" position="0 -3 0" animation-mixer></a-entity>
+
+        <a-image id="explore" src="#exploreHeart" width="5" height="1" position="0 -3.07635 3.20187" rotation="" material="" geometry=""></a-image>
+
+		<a-sky color="#444"></a-sky>
+
+        <a-light type="ambient" color="#FFFFFF"></a-light>
+
+		<script>
+
+			document.getElementById("explore").addEventListener("click", () => {
+				console.debug("Clicked Explore Heart Button")
+
+                document.getElementById("explore").setAttribute("visible", false)
+
+                document.getElementById("staticHeart").setAttribute("position", "0 -20 0")
+
+                document.getElementById("staticHeart").setAttribute("animation", {
+                    property: "scale",
+                    dur: 2000,
+                    to: "200 200 200"
+                })
+
+                setTimeout(() => {
+                    window.location.href = "/heart/dynamic"
+                }, 2100)
+
+			})
+
+		</script>
+
+	</a-scene>
+</body>
+</html>
