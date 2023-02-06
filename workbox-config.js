@@ -7,5 +7,6 @@ module.exports = {
 	ignoreURLParametersMatching: [
 		/^utm_/,
 		/^fbclid$/
-	]
+	],
+	maximumFileSizeToCacheInBytes: 20 * 1024 * 1024,
 };
