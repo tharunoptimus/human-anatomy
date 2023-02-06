@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Human Anatomy</title>
 	<meta name="description" content="Virtual Reality-Oriented Human Anatomy">
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 	<script src="./assets/js/aframe.min.js"></script>
 	<script src="./assets/js/aframe-extras.min.js"></script>
 </head>
@@ -17,37 +17,62 @@
 
 	<a-scene>`
 
-		<a-entity position="0 0.4 10" rotation="0 0 0" movement-controls="fly: true">
-			<a-entity id="superView" camera look-controls wasd-controls rotation-reader>
+		<a-plane class="groundPlane" scale="2 2 2" color="#333" width="8" height="8" rotation="-90 0 0" material=""
+			geometry="" position="0 0.01 0" visible="false"></a-plane>
 
-				<a-entity position="0 0 -3" geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03;"
-					material="color: cyan; shader: flat" cursor="maxDistance: 30; fuse: true">
-
-					<a-animation begin="click" easing="ease-in" attribute="scale" fill="forwards" from="0.2 0.2 0.2"
-						to="1 1 1" dur="150"></a-animation>
-
-					<a-animation begin="fusing" easing="ease-in" attribute="scale" fill="backwards" from="1 1 1"
-						to="0.2 0.2 0.2" dur="750"></a-animation>
-
-				</a-entity>
+		<!-- Player -->
+		<a-entity id="player" position="0 0 2.626" player-move="controllerListenerId: #controller-data;
+              navigationMeshClass: groundPlane;">
+			<a-camera></a-camera>
+			<a-entity id="controller-data"
+				controller-listener="leftControllerId:  #left-controller; rightControllerId: #right-controller;">
 			</a-entity>
+			<a-entity id="left-controller" oculus-touch-controls="hand: left">
+			</a-entity>
+			<!-- experiment with raycasting interval; slight performance improvement but jittery appearance in world -->
+			<a-entity id="right-controller" oculus-touch-controls="hand: right" laser-controls="hand: right"
+				raycaster="objects: .raycaster-target, .navButton, .groundPlane; interval: 0;"
+				raycaster-extras="controllerListenerId: #controller-data; beamImageSrc: #gradient; beamLength: 15;">
+			</a-entity>
+		</a-entity>
+
+
+
+		<!-- Click events for mouse/laser-controls -->
+		<a-entity position="0 0 0" cursor="fuse: false; rayOrigin: mouse;" raycaster="objects: .navButton">
 		</a-entity>
 
 		<a-assets>
 			<img alt="3D Image" id="exploreButton" src="assets/images/humanAnatomy.png">
 			<img alt="3D Image" id="sky" src="assets/images/sky.jpg">
-			<img alt="3D Image" id="anatomy" src="assets/images/anatomy.jpg">
+			<img alt="3D Image" id="anatomy" src="assets/images/anatomy.png">
+			<img alt="3D Image" id="click" src="assets/images/click.png">
+
 
 		</a-assets>
 
-		<a-entity light="type:point; castShadow:true;" position="0 1 0"></a-entity>
-		
-		<a-image src="#exploreButton" position="0 6.85512 -5" width="3" height="3" rotation="" material="" geometry="width: 13"></a-image>
-		
-		<a-image src="#anatomy" position="0 -0.7 0" width="3" height="3" scale="2 2 2"></a-image>
+		<!-- <a-entity light="type:point; castShadow:true;" position="0 1 0"></a-entity> -->
 
-		<a-sphere id="heart" position="0 -0.50817 -0.06404" radius="1" color="red" scale="2 2 2" material="" geometry="radius: 0.1"></a-sphere>
-		<a-sphere id="skin" position="0.99723 -0.50817 -0.06404" radius="1" color="red" scale="2 2 2" material="" geometry="radius: 0.1"></a-sphere>
+		<a-image src="#exploreButton" position="0.06074 3.92551 -0.00966" width="1" height="2" rotation="" material=""
+			geometry="width: 2.5; height: 0.5"></a-image>
+
+		<a-image src="#anatomy" position="0 0.90012 0" width="1" height="3" scale="2 2 2" material=""
+			geometry="width: 1.28; height: 2.49"></a-image>
+
+		<a-text class="annotations" value="Click on the green 
+			icons to learn more!" position="1.59726 1.57988 -0.01379" rotation="" color="black" width="3" align="center"
+			scale="3.34 3.3 1.91"
+			text="anchor: left; width: 1.76; color: white; align: left; alphaTest: 0.45; height: 0.51; letterSpacing: 0.12; tabSize: 4.16; wrapCount: 40.13"></a-text>
+		<!-- <a-sphere id="heart" position="0 -0.50817 -0.06404" radius="1" color="red" scale="2 2 2" material="color: #4CD137" geometry="radius: 0.1"></a-sphere>
+		<a-sphere id="skin" position="0.99723 -0.50817 -0.06404" radius="1" color="red" scale="2 2 2" material="color: #4CD137" geometry="radius: 0.1"></a-sphere>
+		<a-sphere id="kidney" position="0.99723 -0.50817 -0.06404" radius="1" color="red" scale="2 2 2" material="color: #4CD137" geometry="radius: 0.1"></a-sphere> -->
+
+		<a-image class="navButton" id="heart" src="#click" position="0.19765 1.06049 0.07667" width="3" height="3"
+			rotation="" material="" geometry="width: 0.5; height: 0.5"></a-image>
+		<a-image class="navButton" id="skin" src="#click" position="0.62164 1.7655 0.15336" width="3" height="3"
+			rotation="" material="" geometry="width: 0.5; height: 0.5"></a-image>
+		<a-image class="navButton" id="kidney" src="#click" position="-0.22123 0.13903 0.16226" width="3" height="3"
+			rotation="" material="" geometry="width: 0.5; height: 0.5"></a-image>
 
 		<a-sky src="#sky"></a-sky>
 
@@ -61,6 +86,11 @@
 			document.getElementById("skin").addEventListener("click", () => {
 				console.debug("Clicked Skin")
 				window.location.href = "/skin"
+			})
+
+			document.getElementById("kidney").addEventListener("click", () => {
+				console.debug("Clicked Kidney")
+				window.location.href = "/kidney"
 			})
 
 		</script>
