@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Interactive Reading Environment in Web-Based Virtual Reality, ver. 1.0</title>
+    <script src="/assets/js/aframe.min.js"></script>
+    <script src="/assets/js/htmlembed.js"></script>
+
+    <!-- New Navigation -->
+    <script src="/assets/js/raycaster-extras.js"></script>
+    <script src="/assets/js/controller-listener.js"></script>
+    <script src="/assets/js/player-move.js"></script>
+
+</head>
+
+<body>
+
+    <audio autoplay data-audioType="background" loop src="/assets/audio/bg.mp3"></audio>
+
+    <audio class="playback" data-audioId="1" src="../assets/audio/kidney/renalPyramid.mp3"></audio>
+    <audio class="playback" data-audioId="2" src="../assets/audio/kidney/renalCortex.mp3"></audio>
+    <audio class="playback" data-audioId="3" src="../assets/audio/kidney/calyx.mp3"></audio>
+    <audio class="playback" data-audioId="4" src="../assets/audio/kidney/uretes.mp3"></audio>
+    <audio class="playback" data-audioId="5" src="../assets/audio/kidney/about.mp3"></audio>
+
+
+    <a-scene gltf-model="dracoDecoderPath: decoder/" loading-screen="enabled: false">
+        <!-- Assets preload -->
+        <a-assets id="assets">
+            <a-asset-item id="kidney" src="/assets/models/kidney.glb"></a-asset-item>
+            <img id="click" src="/assets/images/click.png" alt="2D Image Asset">
+            <img alt="3D Image" id="hideShow" src="/assets/images/hideshow.png">
+            <img alt="3D Image" id="whatsthis" src="/assets/images/whatsthis.png">
+        </a-assets>
+
+        <!--Hidden NavMesh-->
+        <!-- <a-entity id="nav-mesh" gltf-model="3d/navmesh.gltf" nav-mesh rotation="0 0 0" position="0 0 0" visible="false">
+        </a-entity> -->
+        <!-- Sound component -->
+        <a-entity id="soundlink" sound="" crossorigin="anonymous"></a-entity>
+        <!--3d Environment-->
+
+        <a-plane class="groundPlane" scale="2 2 2" color="#333" width="8" height="8" rotation="-90 0 0" material=""
+            geometry="" position="0 0.01 0" visible="false"></a-plane>
+
+        <!-- Player -->
+        <a-entity id="player" position="0 0 0" player-move="controllerListenerId: #controller-data;
+              navigationMeshClass: groundPlane;">
+            <a-camera></a-camera>
+            <a-entity id="controller-data"
+                controller-listener="leftControllerId:  #left-controller; rightControllerId: #right-controller;">
+            </a-entity>
+            <a-entity id="left-controller" oculus-touch-controls="hand: left">
+            </a-entity>
+            <!-- experiment with raycasting interval; slight performance improvement but jittery appearance in world -->
+            <a-entity id="right-controller" oculus-touch-controls="hand: right" laser-controls="hand: right"
+                raycaster="objects: .raycaster-target, .navButton, .groundPlane; interval: 0;"
+                raycaster-extras="controllerListenerId: #controller-data; beamImageSrc: #gradient; beamLength: 0.5;">
+            </a-entity>
+        </a-entity>
+
+
+
+        <!-- Click events for mouse/laser-controls -->
+        <a-entity position="0 0 0" cursor="fuse: false; rayOrigin: mouse;" raycaster="objects: .navButton">
+        </a-entity>
+
+
+        <a-entity id="kidneyStuff" gltf-model="/assets/models/kidney.glb" position="0.1259 0.88406 -1.35482" raycaster-target="canGrab: true" rotation="" visible="" class="raycaster-target" material="emissive: #000000" scale="0.2 0.2 0.2">
+
+            <a-image class="navButton" id="hideShowButton" src="#hideShow" width="5" height="1" position="5.64542 7.52023 -0.10019" rotation="10 0 0" material="" geometry=""></a-image>
+
+            <a-image class="navButton" id="about" src="#whatsthis" width="5" height="1" position="-0.98737 9.92834 -0.10019" rotation="" material="" geometry=""></a-image>
+
+
+
+            <a-sphere id="renalPyramid" class="navButton" position="-2.09906 0.6915 0.20816" radius="1" scale="3 3 3" material="color: #4CD137" geometry="radius: 0.1"></a-sphere>
+            <a-text class="annotations" value="Renal Pyramid" position="-2.16732 0.4182 0.87533" rotation="" color="black" width="5" align="center" scale="2 2 2" text="color: white"></a-text>
+
+            <a-sphere id="renalCortex" class="navButton" position="-5.09718 3.20091 0.00641" radius="1" scale="3 3 3" material="color: #4CD137" geometry="radius: 0.1"></a-sphere>
+            <a-text class="annotations" value="Renal Cortex" position="-5.42093 2.74878 0.40699" rotation="" color="black" width="5" align="center" scale="2 2 2" text="color: white"></a-text>
+
+            <a-sphere id="calyx" class="navButton" position="-1.96889 3.15819 0.07171" radius="1" scale="3 3 3" material="color: #4CD137" geometry="radius: 0.1"></a-sphere>
+            <a-text class="annotations" value="Calyx" position="-2.12273 3.87749 1.25001" rotation="" color="black" width="5" align="center" scale="2 2 2" text="color: white"></a-text>
+
+            <a-sphere id="ureter" class="navButton" position="0.15477 0.83541 0.14198" radius="1" scale="3 3 3" material="color: #4CD137" geometry="radius: 0.1"></a-sphere>
+            <a-text class="annotations" value="Ureter" position="1.2373 0.78944 0.10836" rotation="" color="black" width="5" align="center" scale="2 2 2" text="color: white"></a-text>
+
+
+
+
+        </a-entity>
+
+
+        <a-sky color="#444"></a-sky>
+
+        <script>
+            document.querySelector('#renalPyramid').addEventListener('click', function () {
+                console.log("clicked renalPyramid");
+            })
+
+
+            let renalPyramids = document.querySelector("#renalPyramid");
+            let renalPyramidsAudio = document.querySelector("[data-audioId='1']");
+            let renalCortex = document.querySelector("#renalCortex");
+            let renalCortexAudio = document.querySelector("[data-audioId='2']");
+
+            let calyx = document.querySelector("#calyx");
+            let calyxAudio = document.querySelector("[data-audioId='3']");
+            let uretes = document.querySelector("#ureter");
+            let uretesAudio = document.querySelector("[data-audioId='4']");
+
+            let annotations = document.querySelectorAll(".annotations");
+
+            document.querySelector("#hideShowButton").addEventListener("click", function () {
+                renalPyramids.setAttribute("visible", !renalPyramids.getAttribute("visible"))
+                renalCortex.setAttribute("visible", !renalCortex.getAttribute("visible"))
+                calyx.setAttribute("visible", !calyx.getAttribute("visible"))
+                uretes.setAttribute("visible", !uretes.getAttribute("visible"))
+
+                annotations.forEach(annotation => {
+                    annotation.setAttribute("visible", !annotation.getAttribute("visible"))
+                })
+            })
+
+            function stopPlaying() {
+                let audios = document.querySelectorAll("audio")
+                audios.forEach(audio => {
+                    if (audio.getAttribute("data-audioType") == "background") return
+                    audio.pause()
+                    audio.currentTime = 0
+                })
+            }
+
+            document.querySelector("#about").addEventListener("click", function () {
+                stopPlaying()
+                let audio = document.querySelector("audio[data-audioId='5']")
+                audio.play()
+            })
+
+            renalPyramids.addEventListener("click", function () {
+                stopPlaying()
+                renalPyramidsAudio.play()
+            })
+
+            renalCortex.addEventListener("click", function () {
+                stopPlaying()
+                renalCortexAudio.play()
+            })
+
+            calyx.addEventListener("click", function () {
+                stopPlaying()
+                calyxAudio.play()
+            })
+
+            uretes.addEventListener("click", function () {
+                stopPlaying()
+                uretesAudio.play()
+            })
+
+        </script>
+
+    </a-scene>
+
+</body>
+
+
+
+</html>
